@@ -28,6 +28,15 @@ const verifySignUpBody = async (req, res, next)=>{
             })
         }
 
+        //Check if the user with the same email is already present or not
+        const mail = await user_model.findOne({email : req.body.email})
+
+        if(mail){
+            return res.status(400).send({
+                message : "Failed!!! user with same email is already present"
+            })
+        }
+
         //Check if the user with the same userId is already present
         const user = await user_model.findOne({userId : req.body.userId})
 
